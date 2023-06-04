@@ -17,14 +17,14 @@ class ArticleModelAdapter extends TypeAdapter<ArticleModel> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return ArticleModel(
-      source: (fields[0] as Map).cast<String, dynamic>(),
-      author: fields[1] as String,
-      title: fields[2] as String,
-      description: fields[3] as String,
-      url: fields[4] as String,
-      urlToImage: fields[5] as String,
-      publishedAt: fields[6] as String,
-      content: fields[7] as String,
+      source: (fields[0] as Map?)?.cast<String, dynamic>(),
+      author: fields[1] as String?,
+      title: fields[2] as String?,
+      description: fields[3] as String?,
+      url: fields[4] as String?,
+      urlToImage: fields[5] as String?,
+      publishedAt: fields[6] as String?,
+      content: fields[7] as String?,
     );
   }
 

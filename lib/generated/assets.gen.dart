@@ -12,11 +12,17 @@ import 'package:flutter/widgets.dart';
 class $AssetsIconsGen {
   const $AssetsIconsGen();
 
+  /// File path: assets/icons/arrow-left.svg
+  String get arrowLeft => 'assets/icons/arrow-left.svg';
+
   /// File path: assets/icons/arrow-right.svg
   String get arrowRight => 'assets/icons/arrow-right.svg';
 
   /// File path: assets/icons/close-circle.svg
   String get closeCircle => 'assets/icons/close-circle.svg';
+
+  /// File path: assets/icons/filter.svg
+  String get filter => 'assets/icons/filter.svg';
 
   /// File path: assets/icons/heart.svg
   String get heart => 'assets/icons/heart.svg';
@@ -41,7 +47,7 @@ class $AssetsIconsGen {
 
   /// List of all assets
   List<String> get values =>
-      [arrowRight, closeCircle, heart, home2, infocircle, searchStatus, setting2, share, wifiSquare];
+      [arrowLeft, arrowRight, closeCircle, filter, heart, home2, infocircle, searchStatus, setting2, share, wifiSquare];
 }
 
 class Assets {

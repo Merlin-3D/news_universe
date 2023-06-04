@@ -18,7 +18,7 @@ class ThemeChanger with ChangeNotifier {
 
   ThemeData get darkTheme {
     return ThemeData.dark().copyWith(
-        primaryColor: kNewsNeutral60,
+        primaryColor: kNewsWhite,
         indicatorColor: kNewsWhite,
         colorScheme: const ColorScheme.dark(background: kNewsNeutral10),
         appBarTheme: const AppBarTheme(backgroundColor: kNewsNeutral10),

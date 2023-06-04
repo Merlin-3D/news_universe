@@ -45,6 +45,7 @@ dependencies:
   share_plus: ^7.0.2
   hive: ^2.2.3
   hive_flutter:
+  path_provider:
 
 dev_dependencies:
   flutter_test:

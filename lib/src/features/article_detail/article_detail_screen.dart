@@ -13,10 +13,14 @@ import 'package:timeago/timeago.dart' as timeago;
 import 'package:url_launcher/url_launcher.dart';
 import 'package:share_plus/share_plus.dart';
 
+enum ModeDisplay { home, other }
+
 class ArticleDetailScreen extends StatefulWidget {
-  const ArticleDetailScreen({super.key, required this.article});
+  const ArticleDetailScreen(
+      {super.key, required this.article, required this.mode});
 
   final ArticleModel article;
+  final ModeDisplay mode;
 
   @override
   State<ArticleDetailScreen> createState() => _ArticleDetailScreenState();
@@ -26,10 +30,11 @@ class _ArticleDetailScreenState extends State<ArticleDetailScreen> {
   @override
   void initState() {
     super.initState();
-
-    Provider.of<ArticleViewModel>(context, listen: false).getFavorite(
-        index:
-            Provider.of<ArticleViewModel>(context, listen: false).indexLiked);
+    if (widget.mode == ModeDisplay.other) {
+      Provider.of<ArticleViewModel>(context, listen: false).getFavorite(
+          index:
+              Provider.of<ArticleViewModel>(context, listen: false).indexLiked);
+    }
   }
 
   @override

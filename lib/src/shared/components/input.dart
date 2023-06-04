@@ -14,11 +14,12 @@ class Input extends StatelessWidget {
       this.controller,
       this.keyboardType,
       this.enabled,
+      this.readOnly = false,
       this.focusNode});
 
   final String? hintText;
   final bool obscureText;
-  final bool? readOnly = false;
+  final bool readOnly;
   final Widget? suffix;
   final ValueChanged<String>? onChanged;
   final FormFieldValidator<String>? validator;
@@ -34,13 +35,17 @@ class Input extends StatelessWidget {
       keyboardType: keyboardType,
       focusNode: focusNode,
       onChanged: onChanged,
+      readOnly: readOnly,
       enabled: enabled,
-      style: Theme.of(context).textTheme.displayMedium,
+      style: Theme.of(context)
+          .textTheme
+          .displayMedium!
+          .copyWith(color: kNewsWhite),
       cursorColor: Theme.of(context).textSelectionTheme.cursorColor,
       decoration: InputDecoration(
         isDense: true,
         contentPadding:
-            EdgeInsets.symmetric(horizontal: Dimens.padding.w, vertical: 4),
+            EdgeInsets.symmetric(horizontal: Dimens.padding.w, vertical: 12.h),
         filled: true,
         hintText: hintText,
         hintStyle: Theme.of(context)

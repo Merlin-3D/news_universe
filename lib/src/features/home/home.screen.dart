@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:auto_route/auto_route.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:news_universe/generated/assets.gen.dart';
 import 'package:news_universe/src/core/router/app_router.dart';
 import 'package:news_universe/src/core/theming/dimens.dart';
-import 'package:news_universe/src/models/article_model.dart';
-import 'package:news_universe/src/shared/components/article_card.dart';
-import 'package:news_universe/src/shared/components/empty_message.dart';
-import 'package:news_universe/src/shared/components/input.dart';
-import 'package:news_universe/src/shared/components/loader.dart';
+import 'package:news_universe/src/core/theming/theme_colors.dart';
+import 'package:news_universe/src/shared/components/news_view_list.dart';
+import 'package:news_universe/src/shared/utils/common.dart';
 import 'package:news_universe/src/viewmodels/articles_viewmodels.dart';
 import 'package:news_universe/src/viewmodels/theme_changer.dart';
 import 'package:provider/provider.dart';
@@ -22,16 +22,17 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   late TabController _tabController;
   final ScrollController _scrollController = ScrollController();
+  // final TextEditingController _searchController = TextEditingController();
   @override
   void initState() {
     super.initState();
     _tabController = TabController(length: 4, vsync: this);
-    Provider.of<ArticleViewModel>(context, listen: false).fetchArticles();
-    Provider.of<ArticleViewModel>(context, listen: false).fetchArticlesSport();
-    Provider.of<ArticleViewModel>(context, listen: false)
-        .fetchArticlesBusiness();
-    Provider.of<ArticleViewModel>(context, listen: false)
-        .fetchArticlesSciences();
+    // Provider.of<ArticleViewModel>(context, listen: false).fetchArticles();
+    // Provider.of<ArticleViewModel>(context, listen: false).fetchArticlesSport();
+    // Provider.of<ArticleViewModel>(context, listen: false)
+    //     .fetchArticlesBusiness();
+    // Provider.of<ArticleViewModel>(context, listen: false)
+    //     .fetchArticlesSciences();
   }
 
   @override
@@ -52,12 +53,74 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               SliverAppBar(
                 pinned: true,
                 floating: false,
-                expandedHeight: 90,
+                expandedHeight: 80,
                 elevation: 0,
                 flexibleSpace: FlexibleSpaceBar(
                   titlePadding: EdgeInsets.all(Dimens.padding.w),
-                  title: const Input(
-                    hintText: 'Search',
+                  title: Row(
+                    children: [
+                      Expanded(
+                        flex: 6,
+                        child: InkWell(
+                          onTap: () {
+                            articleViewModel.setSearchInput(value: '');
+                            context.router.navigate(const SearchRoute());
+                          },
+                          child: DecoratedBox(
+                            decoration: BoxDecoration(
+                                borderRadius:
+                                    BorderRadius.circular(Dimens.halfRadius.w),
+                                color: Theme.of(context)
+                                    .inputDecorationTheme
+                                    .fillColor),
+                            child: SizedBox(
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(
+                                    vertical: 6.h, horizontal: Dimens.space.w),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      'Search',
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .displaySmall!
+                                          .copyWith(color: kNewsWhite),
+                                    ),
+                                    SvgPicture.asset(
+                                      width: 12,
+                                      Assets.icons.searchStatus,
+                                      colorFilter: const ColorFilter.mode(
+                                          kNewsWhite, BlendMode.srcIn),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        flex: 0,
+                        child: Row(
+                          children: [
+                            SizedBox(
+                              width: Dimens.minSpace.w,
+                            ),
+                            InkWell(
+                              onTap: () {},
+                              child: SvgPicture.asset(
+                                width: 16,
+                                Assets.icons.filter,
+                                colorFilter: const ColorFilter.mode(
+                                    kNewsWhite, BlendMode.srcIn),
+                              ),
+                            ),
+                          ],
+                        ),
+                      )
+                    ],
                   ),
                 ),
               ),
@@ -68,16 +131,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                     indicator: Theme.of(context).tabBarTheme.indicator,
                     indicatorColor:
                         Theme.of(context).tabBarTheme.indicatorColor,
-                    tabs: const [
-                      Tab(
-                        text: 'General',
-                      ),
-                      Tab(text: 'Business'),
-                      Tab(text: 'Science'),
-                      Tab(
-                        text: 'Sports',
-                      ),
-                    ],
+                    tabs: tabsList,
                     controller: _tabController, // Assigner le TabController
                   ),
                 ),
@@ -87,67 +141,44 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             body: TabBarView(
               controller: _tabController, // Assigner le TabController
               children: [
-                newsViewList(
-                    errorMessage: articleViewModel.errorMessage,
-                    isLoading: articleViewModel.isLoadingArticle,
-                    articles: articleViewModel.articles,
-                    fetchData: articleViewModel.fetchArticles()),
-                // Contenu de l'onglet 2
-                newsViewList(
-                    errorMessage: articleViewModel.errorMessageBusiness,
-                    isLoading: articleViewModel.isLoadingArticle,
-                    articles: articleViewModel.business,
-                    fetchData: articleViewModel.fetchArticlesBusiness()),
-                // Contenu de l'onglet 3
-                newsViewList(
-                    errorMessage: articleViewModel.errorMessageSciences,
-                    isLoading: articleViewModel.isLoadingArticle,
-                    articles: articleViewModel.sciences,
-                    fetchData: articleViewModel.fetchArticlesSciences()),
-                newsViewList(
-                    errorMessage: articleViewModel.errorMessageSport,
-                    isLoading: articleViewModel.isLoadingArticle,
-                    articles: articleViewModel.sports,
-                    fetchData: articleViewModel.fetchArticlesSport()),
+                NewsViewList(
+                  articleViewModel: articleViewModel,
+                  errorMessage: articleViewModel.errorMessage,
+                  isLoading: articleViewModel.isLoadingArticle,
+                  articles: articleViewModel.articles,
+                  controller: _scrollController,
+                  // fetchData: articleViewModel.fetchArticles()
+                ),
+                NewsViewList(
+                  articleViewModel: articleViewModel,
+                  errorMessage: articleViewModel.errorMessageBusiness,
+                  isLoading: articleViewModel.isLoadingArticle,
+                  articles: articleViewModel.business,
+                  controller: _scrollController,
+                  // fetchData: articleViewModel.fetchArticlesBusiness()
+                ),
+                NewsViewList(
+                  articleViewModel: articleViewModel,
+                  errorMessage: articleViewModel.errorMessageSciences,
+                  isLoading: articleViewModel.isLoadingArticle,
+                  articles: articleViewModel.sciences,
+                  controller: _scrollController,
+                  // fetchData: articleViewModel.fetchArticlesSciences()
+                ),
+                NewsViewList(
+                  articleViewModel: articleViewModel,
+                  errorMessage: articleViewModel.errorMessageSport,
+                  isLoading: articleViewModel.isLoadingArticle,
+                  articles: articleViewModel.sports,
+                  controller: _scrollController,
+                  // fetchData: articleViewModel.fetchArticlesSport()
+                ),
               ],
             ),
           ),
         );
       });
     });
-  }
-
-  Widget newsViewList(
-      {required bool isLoading,
-      required String errorMessage,
-      required List<ArticleModel> articles,
-      required Future<void> fetchData}) {
-    return isLoading == true
-        ? const Loader()
-        : articles.isNotEmpty
-            ? Padding(
-                padding: EdgeInsets.symmetric(horizontal: Dimens.padding.w),
-                child: ListView.builder(
-                  itemCount: articles.length,
-                  itemBuilder: (context, index) {
-                    if (index == articles.length) {
-                      return const Loader();
-                    }
-                    return ArticleCard(
-                        onPressed: () => context.router.navigate(
-                            ArticleDetailRoute(article: articles[index])),
-                        article: articles[index]);
-                  },
-                  controller: _scrollController
-                    ..addListener(() {
-                      if (_scrollController.position.pixels ==
-                          _scrollController.position.maxScrollExtent) {
-                        fetchData;
-                      }
-                    }),
-                ),
-              )
-            : EmptyMessage(type: EmptyType.error, message: errorMessage);
   }
 }
 

@@ -38,7 +38,14 @@ class _$AppRouter extends RootStackRouter {
         child: ArticleDetailScreen(
           key: args.key,
           article: args.article,
+          mode: args.mode,
         ),
+      );
+    },
+    SearchRoute.name: (routeData) {
+      return MaterialPageX<dynamic>(
+        routeData: routeData,
+        child: const SearchScreen(),
       );
     },
     HomeRoute.name: (routeData) {
@@ -94,6 +101,11 @@ class _$AppRouter extends RootStackRouter {
               path: 'article-detail-screen',
               parent: MainRoute.name,
             ),
+            RouteConfig(
+              SearchRoute.name,
+              path: 'search-screen',
+              parent: MainRoute.name,
+            ),
           ],
         )
       ];
@@ -145,12 +157,14 @@ class ArticleDetailRoute extends PageRouteInfo<ArticleDetailRouteArgs> {
   ArticleDetailRoute({
     Key? key,
     required ArticleModel article,
+    required ModeDisplay mode,
   }) : super(
           ArticleDetailRoute.name,
           path: 'article-detail-screen',
           args: ArticleDetailRouteArgs(
             key: key,
             article: article,
+            mode: mode,
           ),
         );
 
@@ -161,16 +175,31 @@ class ArticleDetailRouteArgs {
   const ArticleDetailRouteArgs({
     this.key,
     required this.article,
+    required this.mode,
   });
 
   final Key? key;
 
   final ArticleModel article;
 
+  final ModeDisplay mode;
+
   @override
   String toString() {
-    return 'ArticleDetailRouteArgs{key: $key, article: $article}';
+    return 'ArticleDetailRouteArgs{key: $key, article: $article, mode: $mode}';
   }
+}
+
+/// generated route for
+/// [SearchScreen]
+class SearchRoute extends PageRouteInfo<void> {
+  const SearchRoute()
+      : super(
+          SearchRoute.name,
+          path: 'search-screen',
+        );
+
+  static const String name = 'SearchRoute';
 }
 
 /// generated route for

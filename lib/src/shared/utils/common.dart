@@ -83,3 +83,14 @@ List<BottomNavigationBarItem> bottomNavigationBarItem(BuildContext context) {
     ),
   ];
 }
+
+List<Widget> tabsList = const [
+  Tab(
+    text: 'General',
+  ),
+  Tab(text: 'Business'),
+  Tab(text: 'Science'),
+  Tab(
+    text: 'Sports',
+  ),
+];

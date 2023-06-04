@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:news_universe/src/core/router/app_router.dart';
 import 'package:news_universe/src/core/theming/dimens.dart';
 import 'package:news_universe/src/core/theming/theme_colors.dart';
+import 'package:news_universe/src/features/article_detail/article_detail_screen.dart';
 import 'package:news_universe/src/shared/components/article_card.dart';
 import 'package:news_universe/src/shared/components/empty_message.dart';
 import 'package:news_universe/src/shared/utils/sized_extension.dart';
@@ -41,6 +42,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
             ? Padding(
                 padding: EdgeInsets.symmetric(horizontal: Dimens.padding.w),
                 child: ListView.builder(
+                  reverse: true,
                   itemCount: articleViewModel.articlesInFavorites.length,
                   itemBuilder: (context, index) {
                     return ArticleCard(
@@ -48,6 +50,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                         onPressed: () {
                           articleViewModel.setIndexLiked(value: index);
                           context.router.navigate(ArticleDetailRoute(
+                              mode: ModeDisplay.other,
                               article:
                                   articleViewModel.articlesInFavorites[index]));
                         },

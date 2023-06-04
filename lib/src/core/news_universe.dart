@@ -20,7 +20,11 @@ class NewsUniverse extends StatelessWidget {
           create: (_) => ThemeChanger(getCommonThen()),
         ),
         ChangeNotifierProvider(
-          create: (_) => ArticleViewModel(),
+          create: (_) => ArticleViewModel()
+            ..fetchArticles()
+            ..fetchArticlesSport()
+            ..fetchArticlesSciences()
+            ..fetchArticlesBusiness(),
         )
       ],
       child: Consumer<ThemeChanger>(builder: (context, themeChanger, _) {

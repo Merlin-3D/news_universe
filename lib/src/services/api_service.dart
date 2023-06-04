@@ -14,7 +14,6 @@ class ApiService {
           Uri.parse(
               'https://newsapi.org/v2/everything?$query&pageSize=$pageSize'),
           headers: {'X-Api-Key': Config.apiKeyNews!});
-
       if (response.statusCode == 200) {
         final jsonData = jsonDecode(response.body);
         return ObjectResponse.fromMap(jsonData);
