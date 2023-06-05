@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:news_universe/src/core/router/app_router.dart';
-import 'package:news_universe/src/shared/utils/common.dart';
+import 'package:news_universe/src/core/theming/theme.dart';
 import 'package:news_universe/src/viewmodels/articles_viewmodels.dart';
 import 'package:news_universe/src/viewmodels/theme_changer.dart';
 import 'package:provider/provider.dart';
@@ -17,7 +17,7 @@ class NewsUniverse extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider<ThemeChanger>(
-          create: (_) => ThemeChanger(getCommonThen()),
+          create: (_) => ThemeChanger(lightThemeCustom()),
         ),
         ChangeNotifierProvider(
           create: (_) => ArticleViewModel()

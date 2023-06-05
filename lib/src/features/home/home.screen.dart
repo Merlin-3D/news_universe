@@ -147,6 +147,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                   isLoading: articleViewModel.isLoadingArticle,
                   articles: articleViewModel.articles,
                   controller: _scrollController,
+                  horizontal: 0,
                   // fetchData: articleViewModel.fetchArticles()
                 ),
                 NewsViewList(
@@ -155,6 +156,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                   isLoading: articleViewModel.isLoadingArticle,
                   articles: articleViewModel.business,
                   controller: _scrollController,
+                  horizontal: 0,
                   // fetchData: articleViewModel.fetchArticlesBusiness()
                 ),
                 NewsViewList(
@@ -163,6 +165,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                   isLoading: articleViewModel.isLoadingArticle,
                   articles: articleViewModel.sciences,
                   controller: _scrollController,
+                  horizontal: 0,
                   // fetchData: articleViewModel.fetchArticlesSciences()
                 ),
                 NewsViewList(
@@ -171,6 +174,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                   isLoading: articleViewModel.isLoadingArticle,
                   articles: articleViewModel.sports,
                   controller: _scrollController,
+                  horizontal: 0,
                   // fetchData: articleViewModel.fetchArticlesSport()
                 ),
               ],
