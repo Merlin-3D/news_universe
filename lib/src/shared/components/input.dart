@@ -1,6 +1,5 @@
 import 'package:news_universe/src/core/theming/dimens.dart';
 import 'package:flutter/material.dart';
-import 'package:news_universe/src/core/theming/theme_colors.dart';
 import 'package:news_universe/src/shared/utils/sized_extension.dart';
 
 class Input extends StatelessWidget {
