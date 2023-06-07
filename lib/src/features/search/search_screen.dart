@@ -58,7 +58,10 @@ class _SearchScreenState extends State<SearchScreen> {
                       onChanged: (value) =>
                           articleViewModel.setSearchInput(value: value),
                       suffix: InkWell(
-                        onTap: () => articleViewModel.searchArticles(),
+                        onTap: () {
+                          articleViewModel.setLoadingSearch(value: true);
+                          articleViewModel.searchArticles();
+                        },
                         child: SvgPicture.asset(
                           width: 16,
                           Assets.icons.searchStatus,

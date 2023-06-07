@@ -90,6 +90,11 @@ class ArticleViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  void setLoadingSearch({required bool value}) {
+    _isLoadingSearch = value;
+    notifyListeners();
+  }
+
   void setIndexLiked({required int value}) {
     _indexLiked = value;
     notifyListeners();
@@ -121,7 +126,6 @@ class ArticleViewModel extends ChangeNotifier {
 
   Future<void> searchArticles() async {
     try {
-      _isLoadingSearch = true;
       _articlesSearch.clear();
       List<ArticleModel> nextPageItems = await _articleRepository.fetchArticles(
           query: 'q=$_searchInput', pageSize: 100);
