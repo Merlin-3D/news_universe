@@ -73,7 +73,8 @@ class _ArticleDetailScreenState extends State<ArticleDetailScreen> {
                   RawMaterialButton(
                     constraints: const BoxConstraints(),
                     onPressed: () => Share.share(
-                        'Check out this awesome app: ${widget.article.url}'),
+                        'Follow all the news on news universe: ${widget.article.url}',
+                        sharePositionOrigin: Rect.zero),
                     child: SvgPicture.asset(
                       Assets.icons.share,
                       colorFilter:
