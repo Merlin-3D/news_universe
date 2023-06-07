@@ -94,3 +94,31 @@ List<Widget> tabsList = const [
     text: 'Sports',
   ),
 ];
+
+List<String> sortByItems = [
+  'relevancy',
+  'popularity',
+  'publishedAt',
+];
+
+List<String> typeArticlesItems = [
+  'general',
+  'business',
+  'science',
+  'sports',
+];
+
+List<String> uploadDateItems = [
+  'today',
+  'this week',
+  'this month',
+  'this year',
+];
+
+String capitalizeFirstWord(String text) {
+  if (text.isEmpty) {
+    return text;
+  }
+
+  return text[0].toUpperCase() + text.substring(1);
+}

@@ -6,6 +6,7 @@ import 'package:news_universe/src/core/theming/theme_colors.dart';
 import 'package:news_universe/src/models/article_model.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import 'package:news_universe/src/shared/utils/sized_extension.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class ArticleCard extends StatelessWidget {
   const ArticleCard(
@@ -39,12 +40,14 @@ class ArticleCard extends StatelessWidget {
                             borderRadius: BorderRadius.only(
                                 topLeft: Radius.circular(Dimens.halfRadius.w),
                                 topRight: Radius.circular(Dimens.halfRadius.w)),
-                            child: Image.network(
-                              article.urlToImage!,
-                              height: 200,
+                            child: CachedNetworkImage(
+                              height: 200.h,
                               width: MediaQuery.of(context).size.width,
-                              fit: BoxFit.cover,
-                            ))
+                              imageUrl: article.urlToImage!,
+                              errorWidget: (context, url, error) =>
+                                  const Icon(Icons.error),
+                            ),
+                          )
                         : const SizedBox(),
                     SizedBox(
                       height: Dimens.space.h,

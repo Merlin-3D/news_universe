@@ -7,10 +7,10 @@ class ArticleRepository {
   final DbService _dbService = DbService();
 
   Future<List<ArticleModel>> fetchArticles(
-      {required String query, required int pageSize}) async {
+      {required String query, required int pageSize, String? filter}) async {
     try {
-      final itemsData =
-          await _apiService.fetchAllArticles(query: query, pageSize: pageSize);
+      final itemsData = await _apiService.fetchAllArticles(
+          query: query, pageSize: pageSize, filter: filter);
       final articles = List<ArticleModel>.from(
         itemsData.articles.map((item) {
           return item;

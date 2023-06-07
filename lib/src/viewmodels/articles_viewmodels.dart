@@ -9,6 +9,10 @@ class ArticleViewModel extends ChangeNotifier {
   ArticleModel _articleLiked = ArticleModel();
 
   bool _isLoadingArticle = true;
+  bool _isLoadingBussiness = true;
+  bool _isLoadingScience = true;
+  bool _isLoadingSport = true;
+
   bool _isLoadingSearch = false;
 
   int _indexLiked = 0;
@@ -18,6 +22,9 @@ class ArticleViewModel extends ChangeNotifier {
   int _currentSportPageSize = 100;
 
   String _searchInput = "";
+  String _sortByValue = "relevancy";
+  String _typeValue = "general";
+  String _uploadDate = "today";
   String _errorMessage = "";
   String _errorMessageSport = "";
   String _errorMessageBusiness = "";
@@ -34,6 +41,10 @@ class ArticleViewModel extends ChangeNotifier {
   ArticleModel get articleLiked => _articleLiked;
 
   bool get isLoadingArticle => _isLoadingArticle;
+  bool get isLoadingBussiness => _isLoadingBussiness;
+  bool get isLoadingScience => _isLoadingScience;
+  bool get isLoadingSport => _isLoadingSport;
+
   bool get isLoadingSearch => _isLoadingSearch;
 
   int get indexLiked => _indexLiked;
@@ -43,6 +54,9 @@ class ArticleViewModel extends ChangeNotifier {
   int get currentSportPageSize => _currentSportPageSize;
 
   String get searchInput => _searchInput;
+  String get sortByValue => _sortByValue;
+  String get typeValue => _typeValue;
+  String get uploadDate => _uploadDate;
   String get errorMessage => _errorMessage;
   String get errorMessageSport => _errorMessageSport;
   String get errorMessageBusiness => _errorMessageBusiness;
@@ -56,8 +70,43 @@ class ArticleViewModel extends ChangeNotifier {
   List<ArticleModel> get articlesInFavorites => _articlesInFavorites;
   List<ArticleModel> get articlesSearch => _articlesSearch;
 
+  void setIsLoadingValue({required bool value}) {
+    _isLoadingArticle = value;
+    notifyListeners();
+  }
+
+  void setIsLoadingBussinessValue({required bool value}) {
+    _isLoadingBussiness = value;
+    notifyListeners();
+  }
+
+  void setIsLoadingScienceValue({required bool value}) {
+    _isLoadingScience = value;
+    notifyListeners();
+  }
+
+  void setIsLoadingSportValue({required bool value}) {
+    _isLoadingSport = value;
+    notifyListeners();
+  }
+
   void setIndexLiked({required int value}) {
     _indexLiked = value;
+    notifyListeners();
+  }
+
+  void setSortByValue({required String value}) {
+    _sortByValue = value;
+    notifyListeners();
+  }
+
+  void setUploadDate({required String value}) {
+    _uploadDate = value;
+    notifyListeners();
+  }
+
+  void setTypeValue({required String value}) {
+    _typeValue = value;
     notifyListeners();
   }
 
@@ -86,12 +135,15 @@ class ArticleViewModel extends ChangeNotifier {
     }
   }
 
-  Future<void> fetchArticles() async {
+  Future<void> fetchArticles(
+      {String? sortBy, String? fromDate, String? toDate}) async {
     try {
+      _articles.clear();
       List<ArticleModel> nextPageItems = await _articleRepository.fetchArticles(
           query:
               'sources=$bbcSport,$foxSport,$skySport,$bloomberg,$financialTimes,$businessInsider,$newScientist,$nationalGeographic,$scienceDaily',
-          pageSize: _currentPageSize);
+          pageSize: _currentPageSize,
+          filter: 'from=$fromDate&to=$toDate&sortBy=$sortBy');
       _articles.addAll(nextPageItems);
       _currentPageSize = _currentPageSize + 10;
       _isLoadingArticle = false;
@@ -103,50 +155,59 @@ class ArticleViewModel extends ChangeNotifier {
     }
   }
 
-  Future<void> fetchArticlesSport() async {
+  Future<void> fetchArticlesSport(
+      {String? sortBy, String? fromDate, String? toDate}) async {
     try {
+      _sports.clear();
       List<ArticleModel> nextPageItems = await _articleRepository.fetchArticles(
           query: 'sources=$bbcSport,$foxSport,$skySport',
-          pageSize: _currentSportPageSize);
+          pageSize: _currentSportPageSize,
+          filter: 'from=$fromDate&to=$toDate&sortBy=$sortBy');
       _sports.addAll(nextPageItems);
       _currentSportPageSize = _currentSportPageSize + 10;
-      _isLoadingArticle = false;
+      _isLoadingSport = false;
       notifyListeners();
     } catch (e) {
       _errorMessageSport = catchErrorMessage;
-      _isLoadingArticle = false;
+      _isLoadingSport = false;
       notifyListeners();
     }
   }
 
-  Future<void> fetchArticlesBusiness() async {
+  Future<void> fetchArticlesBusiness(
+      {String? sortBy, String? fromDate, String? toDate}) async {
     try {
+      _business.clear();
       List<ArticleModel> nextPageItems = await _articleRepository.fetchArticles(
           query: 'sources=$bloomberg,$financialTimes,$businessInsider',
-          pageSize: _currentsBusinessPageSize);
+          pageSize: _currentsBusinessPageSize,
+          filter: 'from=$fromDate&to=$toDate&sortBy=$sortBy');
       _business.addAll(nextPageItems);
       _currentsBusinessPageSize = _currentsBusinessPageSize + 10;
-      _isLoadingArticle = false;
+      _isLoadingBussiness = false;
       notifyListeners();
     } catch (e) {
       _errorMessageBusiness = catchErrorMessage;
-      _isLoadingArticle = false;
+      _isLoadingBussiness = false;
       notifyListeners();
     }
   }
 
-  Future<void> fetchArticlesSciences() async {
+  Future<void> fetchArticlesSciences(
+      {String? sortBy, String? fromDate, String? toDate}) async {
     try {
+      _sciences.clear();
       List<ArticleModel> nextPageItems = await _articleRepository.fetchArticles(
           query: 'sources=$newScientist,$nationalGeographic,$scienceDaily',
-          pageSize: _currentSciencesPageSize);
+          pageSize: _currentSciencesPageSize,
+          filter: 'from=$fromDate&to=$toDate&sortBy=$sortBy');
       _sciences.addAll(nextPageItems);
       _currentSciencesPageSize = _currentSciencesPageSize + 10;
-      _isLoadingArticle = false;
+      _isLoadingScience = false;
       notifyListeners();
     } catch (e) {
       _errorMessageSciences = catchErrorMessage;
-      _isLoadingArticle = false;
+      _isLoadingScience = false;
       notifyListeners();
     }
   }

@@ -6,6 +6,7 @@ import 'package:news_universe/src/core/router/app_router.dart';
 import 'package:news_universe/src/core/theming/dimens.dart';
 import 'package:news_universe/src/core/theming/theme_colors.dart';
 import 'package:news_universe/src/shared/components/news_view_list.dart';
+import 'package:news_universe/src/shared/screens/filter_dialog.dart';
 import 'package:news_universe/src/shared/utils/common.dart';
 import 'package:news_universe/src/viewmodels/articles_viewmodels.dart';
 import 'package:news_universe/src/viewmodels/theme_changer.dart';
@@ -27,12 +28,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   void initState() {
     super.initState();
     _tabController = TabController(length: 4, vsync: this);
-    // Provider.of<ArticleViewModel>(context, listen: false).fetchArticles();
-    // Provider.of<ArticleViewModel>(context, listen: false).fetchArticlesSport();
-    // Provider.of<ArticleViewModel>(context, listen: false)
-    //     .fetchArticlesBusiness();
-    // Provider.of<ArticleViewModel>(context, listen: false)
-    //     .fetchArticlesSciences();
   }
 
   @override
@@ -41,6 +36,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     super.dispose();
   }
 
+  int tabIndex = 0;
   @override
   Widget build(BuildContext context) {
     return Consumer<ThemeChanger>(builder: (context, themeChanger, _) {
@@ -109,7 +105,16 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                               width: Dimens.minSpace.w,
                             ),
                             InkWell(
-                              onTap: () {},
+                              onTap: () {
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return FilterDialog(
+                                        index: tabIndex,
+                                        articleViewModel: articleViewModel);
+                                  },
+                                );
+                              },
                               child: SvgPicture.asset(
                                 width: 16,
                                 Assets.icons.filter,
@@ -129,6 +134,11 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                   TabBar(
                     labelColor: Theme.of(context).tabBarTheme.labelColor,
                     indicator: Theme.of(context).tabBarTheme.indicator,
+                    onTap: (value) {
+                      setState(() {
+                        tabIndex = value;
+                      });
+                    },
                     indicatorColor:
                         Theme.of(context).tabBarTheme.indicatorColor,
                     tabs: tabsList,
@@ -153,7 +163,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                 NewsViewList(
                   articleViewModel: articleViewModel,
                   errorMessage: articleViewModel.errorMessageBusiness,
-                  isLoading: articleViewModel.isLoadingArticle,
+                  isLoading: articleViewModel.isLoadingBussiness,
                   articles: articleViewModel.business,
                   controller: _scrollController,
                   horizontal: 0,
@@ -162,7 +172,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                 NewsViewList(
                   articleViewModel: articleViewModel,
                   errorMessage: articleViewModel.errorMessageSciences,
-                  isLoading: articleViewModel.isLoadingArticle,
+                  isLoading: articleViewModel.isLoadingScience,
                   articles: articleViewModel.sciences,
                   controller: _scrollController,
                   horizontal: 0,
@@ -171,7 +181,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                 NewsViewList(
                   articleViewModel: articleViewModel,
                   errorMessage: articleViewModel.errorMessageSport,
-                  isLoading: articleViewModel.isLoadingArticle,
+                  isLoading: articleViewModel.isLoadingSport,
                   articles: articleViewModel.sports,
                   controller: _scrollController,
                   horizontal: 0,

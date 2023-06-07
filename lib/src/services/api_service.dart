@@ -8,12 +8,13 @@ class ApiService {
   final baseUrl = Config.apiUrl;
 
   Future<ObjectResponse> fetchAllArticles(
-      {required String query, required int pageSize}) async {
+      {required String query, required int pageSize, String? filter}) async {
     try {
       final response = await http.get(
           Uri.parse(
-              'https://newsapi.org/v2/everything?$query&pageSize=$pageSize'),
+              'https://newsapi.org/v2/everything?$query&pageSize=$pageSize&$filter'),
           headers: {'X-Api-Key': Config.apiKeyNews!});
+      print(response.request!.url);
       if (response.statusCode == 200) {
         final jsonData = jsonDecode(response.body);
         return ObjectResponse.fromMap(jsonData);

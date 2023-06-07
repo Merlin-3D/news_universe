@@ -42,7 +42,9 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
             ? Padding(
                 padding: EdgeInsets.symmetric(horizontal: Dimens.padding.w),
                 child: ListView.builder(
-                  reverse: true,
+                  reverse: articleViewModel.articlesInFavorites.length > 1
+                      ? true
+                      : false,
                   itemCount: articleViewModel.articlesInFavorites.length,
                   itemBuilder: (context, index) {
                     return ArticleCard(

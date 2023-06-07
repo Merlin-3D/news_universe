@@ -37,21 +37,18 @@ class Input extends StatelessWidget {
       onChanged: onChanged,
       readOnly: readOnly,
       enabled: enabled,
-      style: Theme.of(context)
-          .textTheme
-          .displayMedium!
-          .copyWith(color: kNewsWhite),
+      style: Theme.of(context).textTheme.displayMedium!.copyWith(
+          color: Theme.of(context).indicatorColor, fontWeight: FontWeight.w500),
       cursorColor: Theme.of(context).textSelectionTheme.cursorColor,
       decoration: InputDecoration(
         isDense: true,
         contentPadding:
             EdgeInsets.symmetric(horizontal: Dimens.padding.w, vertical: 12.h),
-        filled: true,
+        filled: false,
         hintText: hintText,
-        hintStyle: Theme.of(context)
-            .textTheme
-            .displaySmall!
-            .copyWith(color: kNewsWhite),
+        hintStyle: Theme.of(context).textTheme.displaySmall!.copyWith(
+            color: Theme.of(context).indicatorColor,
+            fontWeight: FontWeight.w500),
         suffix: suffix,
       ),
     );
