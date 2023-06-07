@@ -22,7 +22,7 @@ class SnackBarMessage {
         style: Theme.of(context)
             .textTheme
             .displayLarge!
-            .copyWith(fontWeight: FontWeight.w600),
+            .copyWith(color: kNewsWhite, fontWeight: FontWeight.w600),
       ),
       action: SnackBarAction(
         label: 'Undo',
