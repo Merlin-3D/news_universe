@@ -19,7 +19,7 @@ samples, guidance on mobile development, and a full API reference.
 **Add `NEWS_API_KEY` variable and past newsapi**
 **After that add `API_URL=https://newsapi.org/v2` newsapi**
 
-<img src="./assets/screens/1.jpg" alt="News"/>
+<img src="./assets/screens/1.jpg" alt="News" style="height: 150px"/>
 <img src="./assets/screens/2.jpg" alt="News"/>
 <img src="./assets/screens/3.jpg" alt="News"/>
 <img src="./assets/screens/4.jpg" alt="News"/>
