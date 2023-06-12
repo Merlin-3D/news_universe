@@ -15,8 +15,6 @@ For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
 
-### `yarn build`
-
 **Note: In folder assets create a new file `.env`!**
 **Add `NEWS_API_KEY` variable and past newsapi**
 **After that add `API_URL=https://newsapi.org/v2` newsapi**
