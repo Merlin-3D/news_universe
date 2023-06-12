@@ -12,6 +12,7 @@ import 'package:provider/provider.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import 'package:url_launcher/url_launcher.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 enum ModeDisplay { home, other }
 
@@ -123,11 +124,13 @@ class _ArticleDetailScreenState extends State<ArticleDetailScreen> {
               const Divider(),
               widget.article.urlToImage!.isNotEmpty
                   ? ClipRRect(
-                      child: Image.network(
-                      widget.article.urlToImage!,
+                      child: CachedNetworkImage(
+                      imageUrl: widget.article.urlToImage!,
                       height: 200,
                       width: MediaQuery.of(context).size.width,
                       fit: BoxFit.cover,
+                      errorWidget: (context, url, error) =>
+                          const Icon(Icons.error),
                     ))
                   : const SizedBox(),
               SizedBox(

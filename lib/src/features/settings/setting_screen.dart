@@ -73,24 +73,18 @@ class _SettingScreenState extends State<SettingScreen> {
                   },
                   description:
                       'Lorem Ipsum is simply dummy text of the printing and typesetting '),
-              SizedBox(
-                height: Dimens.space.h,
-              ),
-              const Divider(),
-              SizedBox(
-                height: Dimens.space.h,
-              ),
-              OtionItem(
-                  title: 'Notification',
-                  displaySwitch: true,
-                  switchValue: isNotification,
-                  onSwitchChanged: (p0) {
-                    setState(() {
-                      isNotification = !isNotification;
-                    });
-                  },
-                  description:
-                      'Lorem Ipsum is simply dummy text of the printing and typesetting '),
+
+              // OtionItem(
+              //     title: 'Notification',
+              //     displaySwitch: true,
+              //     switchValue: isNotification,
+              //     onSwitchChanged: (p0) {
+              //       setState(() {
+              //         isNotification = !isNotification;
+              //       });
+              //     },
+              //     description:
+              //         'Lorem Ipsum is simply dummy text of the printing and typesetting '),
               SizedBox(
                 height: Dimens.space.h,
               ),
